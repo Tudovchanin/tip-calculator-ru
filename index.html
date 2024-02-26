@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+	:root {
+	--focus-color: aquamarine;
+	--Very-dark-cyan: hsl(183, 100%, 15%);
+	--Strong-cyan: hsl(172, 67%, 45%);
+	--Dark-grayish-cyan: hsl(186, 14%, 43%);
+	--Grayish-cyan: hsl(184, 14%, 56%);
+	--Light-grayish-cyan: hsl(185, 41%, 84%);
+	--Very-light-grayish-cyan: hsl(189, 41%, 97%);
+	--White: hsl(0, 0%, 100%);
+	--border-radius: 6px;
+}
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+body {
+	display: grid;
+	justify-items: center;
+	min-height: 100vh;
+	background-color: var(--Light-grayish-cyan);
+}
+.wrapper-card {
+	padding-top: 16px;
+}
+input {
+	min-width: 0;
+	text-align: right;
+	border: none;
+	padding: 0 8px;
+	font-family: "Space Mono", monospace;
+	font-size: 1.5rem;
+	outline: none;
+	color: var(--Very-dark-cyan);
+}
+input:focus {
+	outline: var(--Strong-cyan) solid 2px;
+}
+button {
+	font-family: "Space Mono", monospace;
+	font-size: 20px;
+	font-weight: 700;
+	color: var(--White);
+	border-radius: var(--border-radius);
+	padding: 6px 0;
+}
+
+.title-body {
+	font-family: "Space Mono", monospace;
+	color: var(--Dark-grayish-cyan);
+	text-align: center;
+}
+.card {
+	display: flex;
+	flex-wrap: wrap;
+	height: 90vh;
+	gap: 16px;
+	background-color: var(--White);
+	padding: 16px;
+	font-family: "Space Mono", monospace;
+	font-size: 16px;
+	border-radius: 20px 20px 0 0;
+}
+.data-selection-block {
+	display: grid;
+	width: 100%;
+	gap: 4px;
+}
+.title {
+	color: var(--Dark-grayish-cyan);
+	padding: 6px 0;
+}
+.bill {
+	background-color: var(--Light-grayish-cyan);
+	background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="30" viewBox="0 0 64 64" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M18.6081 8H36.7829C40.4023 8 43.5223 8.61794 46.1011 9.90454C48.661 11.1607 50.6337 12.9301 51.9763 15.2187C53.3342 17.4759 54 20.0578 54 22.9327C54 26.0241 53.341 28.7356 51.9768 31.0249C50.6298 33.3002 48.6486 35.0314 46.0787 36.2244L46.0721 36.2274C43.5017 37.398 40.3928 37.9602 36.7829 37.9602H26.7374V40.2885H37.3998V47.2802H26.7374V56H18.6081V47.2802H12V40.2885H18.6081V37.9602H12V31H18.6081V8ZM20.6081 10V33H14V35.9602H20.6081V42.2885H14V45.2802H20.6081V54H24.7374V45.2802H35.3998V42.2885H24.7374V35.9602H36.7829C40.1946 35.9602 43.0011 35.4276 45.24 34.4087C47.4779 33.3692 49.1348 31.8996 50.256 30.0057L50.2576 30.003C51.4038 28.0804 52 25.7378 52 22.9327C52 20.3757 51.4111 18.1571 50.2599 16.2453L50.2537 16.2351C49.1282 14.3146 47.4638 12.8005 45.2173 11.6987L45.211 11.6955C42.9806 10.5821 40.1852 10 36.7829 10H20.6081ZM24.7374 12.9918H36.7829C39.3178 12.9918 41.4626 13.452 43.1382 14.4604C44.7694 15.4296 45.9909 16.6927 46.7473 18.2595C47.4937 19.762 47.8707 21.3444 47.8707 22.9959C47.8707 24.9585 47.483 26.7157 46.6693 28.2341C45.8596 29.7852 44.5999 30.9695 42.9407 31.7905C41.2696 32.6174 39.1993 33 36.7829 33H24.7374V12.9918ZM26.7374 14.9918V31H36.7829C39.0061 31 40.7453 30.6454 42.0537 29.998C43.3721 29.3456 44.3034 28.4466 44.8985 27.3044L44.9042 27.2935C45.5357 26.1171 45.8707 24.6957 45.8707 22.9959C45.8707 21.6586 45.5676 20.3785 44.9538 19.1446L44.9482 19.1333C44.3854 17.9654 43.4594 16.9772 42.1143 16.1785L42.1089 16.1753C40.8479 15.4157 39.099 14.9918 36.7829 14.9918H26.7374Z" fill="black"/></svg>');
+	background-repeat: no-repeat;
+	background-position: 18px center;
+}
+.container-percentage {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 12px;
+}
+.percentage {
+	border: none;
+	text-align: center;
+	background-color: var(--Very-dark-cyan);
+	cursor: pointer;
+}
+.percentage:hover {
+	background-color: var(--focus-color);
+	color: var(--Very-dark-cyan);
+}
+.custom-percentage {
+	text-align: right;
+}
+.custom-percentage::placeholder {
+	text-align: right;
+	color: var(--Dark-grayish-cyan);
+	font-size: 16px;
+}
+.number-of-people {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='16'%3E%3Cpath fill='%239EBBBD' d='M9.573 7.729c.406 0 .784.07 1.126.209.342.14.639.33.881.569.232.227.438.503.614.82a5.1 5.1 0 01.407.949c.097.312.178.654.242 1.016.062.359.105.699.126 1.011.02.307.031.624.031.945 0 .836-.259 1.512-.768 2.01-.504.492-1.17.742-1.98.742H2.748c-.81 0-1.477-.25-1.98-.742C.259 14.76 0 14.084 0 13.248c0-.322.01-.64.032-.945.02-.312.063-.652.126-1.01.063-.363.144-.705.242-1.017.1-.323.238-.643.407-.948.176-.318.382-.594.613-.821.243-.238.54-.43.882-.57.342-.138.72-.208 1.125-.208.16 0 .313.067.61.265.183.123.397.264.636.421.204.134.48.259.822.372.333.11.671.167 1.005.167a3.19 3.19 0 001.006-.167c.341-.113.618-.238.822-.372l.636-.42c.296-.2.45-.266.61-.266zM6.598 0C7.63 0 8.522.38 9.252 1.129s1.1 1.666 1.1 2.724c0 1.06-.37 1.976-1.1 2.725-.73.75-1.623 1.13-2.654 1.13-1.03 0-1.924-.38-2.653-1.13-.73-.749-1.1-1.666-1.1-2.725 0-1.058.37-1.975 1.1-2.724C4.675.379 5.567 0 6.598 0z'/%3E%3C/svg%3E");
+	background-position: 22px center;
+}
+
+
+.title-people {
+	display: flex;
+	justify-content: space-between;
+}
+.error-people-deactive {
+	display: none;
+}
+.error-active {
+	display: flex;
+	color: red;
+}
+.error-border {
+	border: solid 2px red;
+}
+.error-border:focus {
+	outline: red;
+}
+.result-display-block {
+	display: grid;
+	padding: 16px;
+	gap: 26px;
+	width: 100%;
+	border-radius: 12px;
+	background-color: var(--Very-dark-cyan);
+}
+.container-title-result {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	min-width: 0;
+}
+.title-result {
+	color: var(--White);
+}
+.person {
+	color: var(--Strong-cyan);
+}
+.tip-amount {
+	width: 70%;
+	font-size: 32px;
+	background-color: var(--Very-dark-cyan);
+	color: var(--Strong-cyan);
+}
+.reset {
+	align-self: end;
+	font-size: 16px;
+	padding: 12px 0;
+	background-color: var(--Strong-cyan);
+	color: var(--Very-dark-cyan);
+	border: none;
+	opacity: 0.5;
+	cursor: pointer;
+}
+.reset:hover {
+	background-color: var(--focus-color);
+	opacity: 1;
+}
+.active-reset {
+	opacity: 1;
+}
+@media (min-width: 750px) {
+	body {
+		align-items: center;
+	}
+	.card {
+		flex-wrap: nowrap;
+		padding: 28px;
+		max-width: 800px;
+		height: 450px;
+		font-size: 16px;
+		border-radius: 20px 20px 20px 20px;
+	}
+	.result-display-block {
+		padding: 32px;
+		
+	}
+	.tip-amount {
+		font-size: 36px;
+	}
+	.title-result {
+		align-self: center;
+	}
+}
+
+</style>
+	<title>Клькулятор Чаевых</title>
+</head>
+<body>
+	
+	<div class="wrapper-card"> 
+		<h1 class="title-body" tabindex="0">РАЗДЕЛИТЕЛЬ-СЧЕТА</h1> 
+		<article class="card"> 
+			<section class="data-selection-block"> 
+				<label class="title title-bill" for="bill-id">Счет</label> 
+				<input type="text" class="bill" id="bill-id"> 
+				<label class="title title-people" for="people">Количество людей <span 
+					class="error-people error-people-deactive">Не может быть нулем</span></label> 
+			<input type="text" class="bill number-of-people" id="people"> 
+				<h2 class="title" aria-label="Выберите % чаевых" tabindex="0">Выберите % чаевых</h2> 
+				<div class="container-percentage" aria-label="проценты"> 
+					<button class="percentage" value="5">5%</button> 
+					<button class="percentage" value="10">10%</button> 
+					<button class="percentage" value="15">15%</button> 
+					<button class="percentage" value="25">25%</button> 
+					<button class="percentage" value="50">50%</button> 
+					<input type="text" class="custom-percentage" placeholder="свой %"> 
+				</div> 
+				
+			</section> 
+			<section class="result-display-block" aria-label="отображение результата"> 
+				<div class="container-title-result"> 
+					<label class="title-result" for="tip"> 
+						Сумма чаевых<br> 
+						<span class="person">/ на человека</span> 
+					</label> 
+					<input type="text" class="tip-amount" id="tip" value="0.00" readonly> 
+				</div> 
+				<div class="container-title-result"> 
+					<label class="title-result" for="total"> 
+						Итого<br> 
+						<span class="person">/ на человека</span> 
+					</label> 
+					<input type="text" class="tip-amount total-person" id="total" value="0.00" readonly> 
+				</div> 
+				<button class="reset">СБРОС</button> 
+			</section> 
+		</article> 
+	</div> 
+
+
+	<script>
+		const { customPercentage, percentage, bill, people, btnReset } = getElements();
+const errorText = document.querySelector('.error-people');
+
+customPercentage.oninput = handleInput;
+bill.oninput = handleInput;
+people.oninput = handleInput;
+percentage.forEach(element => {
+
+	element.onclick = function () {
+
+		const objData = getData(element);
+
+		if (dataChecking(objData)) {
+			count(objData.bill, objData.percentage, objData.numberOfPeople);
+		}
+	}
+});
+btnReset.onclick = function () {
+	const inputFields = [customPercentage, bill, people];
+	const outputFields = [document.querySelector('.tip-amount'), document.querySelector('.total-person')];
+	inputFields.forEach(field => field.value = '');
+	outputFields.forEach(field => field.value = '');
+	deActivationBtnReset()
+	showScore('0.00', '0.00')
+}
+
+
+function getElements() {
+	const customPercentage = document.querySelector('.custom-percentage');
+	const percentage = document.querySelectorAll('.percentage');
+	const bill = document.querySelector('.bill');
+	const people = document.querySelector('.number-of-people');
+	const btnReset = document.querySelector('.reset');
+
+	return {
+		customPercentage,
+		percentage,
+		bill,
+		people,
+		btnReset
+	};
+}
+function getData(percentage) {
+	const data = {
+		bill: +bill.value,
+		percentage: percentage ? +percentage.value : null,
+		customPercentage: +customPercentage.value,
+		numberOfPeople: +people.value,
+	}
+	return data;
+}
+function dataChecking({ bill, numberOfPeople, customPercentage, percentage }) {
+	return (bill && numberOfPeople && customPercentage) || (bill && numberOfPeople && percentage);
+}
+function handleInput() {
+	checkIfLessThanOne(people)
+	const objData = getData();
+	if (dataChecking(objData)) {
+		count(objData.bill, objData.customPercentage, objData.numberOfPeople);
+		return;
+	}
+}
+function checkIfLessThanOne(elem) {
+	if (parseFloat(elem.value) === 0) {
+		elem.value = '';
+		showError(errorText, people);
+		return;
+	}
+	hideError(errorText, people);
+}
+function count(bill, percentage, numberOfPeople) {
+	const tip = ((bill * percentage / 100) / numberOfPeople).toFixed(2);
+	const totalPerson = ((bill + (bill * percentage / 100)) / numberOfPeople).toFixed(2);
+	showScore(tip, totalPerson);
+	activationBtnReset();
+}
+function showScore(tip, total) {
+	let tipAmount = document.querySelector('.tip-amount');
+	let totalPerson = document.querySelector('.total-person');
+	tipAmount.value = `${tip}руб.`;
+	totalPerson.value = `${total}руб.`;
+}
+function activationBtnReset() {
+	btnReset.classList.add('active-reset');
+}
+function deActivationBtnReset() {
+	btnReset.classList.remove('active-reset');
+}
+
+function showError(text, input) {
+	text.classList.add('error-active');
+	input.classList.add('error-border');
+}
+
+function hideError(text, input) {
+	text.classList.remove('error-active');
+	input.classList.remove('error-border');
+}
+	</script>
+</body>
+</html>
